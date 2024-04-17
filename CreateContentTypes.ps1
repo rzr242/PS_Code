@@ -79,6 +79,7 @@ function AddSiteColumnToContentType {
     if ($null -eq $siteColumn) {
         Write-Host "Site column $($SiteColumnDefinition.DisplayName) not found, creating it first"
         AddFieldToSite -SiteColumn $SiteColumnDefinition
+        $siteColumn = Get-PnPField -Identity $SiteColumnDefinition.InternalName
         Add-PnPFieldToContentType -Field $siteColumn -ContentType $ContentTypeId -Required:$SiteColumnDefinition.Required
         Write-Host "Site column $($SiteColumnDefinition.DisplayName) added to content type $ContentTypeId"    
     } else {
@@ -97,7 +98,8 @@ function AddTaxonomyFieldToContentType {
     $siteColumn = Get-PnPField -Identity $TaxonomyField.InternalName -ErrorAction SilentlyContinue
     if ($null -eq $siteColumn) {
         Write-Host "Site column $($TaxonomyField.DisplayName) not found, creating it first"
-        AddTaxonomyFieldToSite TaxField $TaxonomyField
+        AddTaxonomyFieldToSite -TaxField $TaxonomyField
+        $siteColumn = Get-PnPField -Identity $TaxonomyField.InternalName
         Add-PnPFieldToContentType -Field $siteColumn -ContentType $ContentTypeId -Required:$SiteColumnDefinition.Required
         Write-Host "Site column $($TaxonomyField.DisplayName) added to content type $ContentTypeId"    
     } else {
@@ -120,6 +122,7 @@ function AddFieldToSite {
         }
     
         Write-Host "Field $($SiteColumn.DisplayName) created"
+        
     } else {
         Write-Host "Field $($SiteColumn.DisplayName) already exists"
     }
@@ -175,4 +178,4 @@ foreach ($contentType in $contentTypes) {
     CreateContentType -ContentType $contentType
 }
 
-
+Write-Host "Content types created, thank you for using this script" -ForegroundColor Green
