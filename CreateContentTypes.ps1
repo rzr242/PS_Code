@@ -1,10 +1,10 @@
-# param(
-#     [Parameter(Mandatory=$true)]
-#     [string]$SiteUrl
-# )
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$SiteUrl
+)
 
 Import-Module PnP.PowerShell
-$SiteUrl = "https://m365x98556761.sharepoint.com/sites/contentTypeHub/"
+
 # Connect to SharePoint using the provided SiteUrl
 Connect-PnPOnline -Url $siteUrl -LaunchBrowser -Interactive
 
@@ -157,7 +157,7 @@ function AddTaxonomyFieldToSite {
 
 
 # Common property for Group name for columns and Content types
-$group = "Svenska Handelsbanken"
+$group = "SHB Columns and Content Types"
 
 # Array of content types to be created
 $contentTypes = @(
